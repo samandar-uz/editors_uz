@@ -8,9 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface OrdersRepository extends JpaRepository<Orders, Integer> {
-    boolean existsByUserIdAndTemplateId(Integer userId, Integer templateId);
+    boolean existsByUserIdAndProductId(Integer userId, Integer templateId);
     List<Orders> findByUser(User user);
-
-    List<Orders> findAllByUserId(Integer userId);
 
 }

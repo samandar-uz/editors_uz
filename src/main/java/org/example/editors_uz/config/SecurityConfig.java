@@ -28,7 +28,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/auth", "/logout", "/products")
+                        .ignoringRequestMatchers("/auth", "/logout", "/products","/payment/submit")
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
@@ -47,6 +47,7 @@ public class SecurityConfig {
                                 "/courses",
                                 "/templates",
                                 "/course/buy/**",
+                                "/payment/submit",
                                 "/basket",
                                 "/logout"
                         ).authenticated()

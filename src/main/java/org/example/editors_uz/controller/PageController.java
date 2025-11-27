@@ -56,13 +56,19 @@ public class PageController {
         User user = getAuthenticatedUser(token);
         if (user == null) return "redirect:/auth";
 
-        model.addAttribute("orders", ordersRepository.findByUser(user)); // faqat userning buyurtmalari
+        model.addAttribute("orders", ordersRepository.findByUser(user));
         return "basket";
     }
 
     @GetMapping("/auth")
     public String loginPage(@CookieValue(value = "AUTH_TOKEN", required = false) String token) {
         return getAuthenticatedUser(token) != null ? "redirect:/index" : "auth";
+    }
+    @GetMapping("balance/add")
+    public String addProduct(@CookieValue(value = "AUTH_TOKEN", required = false) String token, Model model) {
+        User user = getAuthenticatedUser(token);
+        if (user == null) return "redirect:/auth";
+        return "add-balance";
     }
 
     @GetMapping("/add")

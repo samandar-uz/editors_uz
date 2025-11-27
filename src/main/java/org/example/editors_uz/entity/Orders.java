@@ -19,7 +19,7 @@ public class Orders extends BaseEntity {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "template_id", nullable = false)
-    private Templates template;
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
 }
