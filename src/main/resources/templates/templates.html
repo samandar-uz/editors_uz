@@ -269,25 +269,32 @@
                     <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg mr-2 mb-4">Photoshop</button>
                     <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg mr-2 mb-4">After Effects</button>
                 </div>
-                <div class="text-center mt-5" th:if="${temp.size() == 0}">
+                <div class="text-center mt-5" th:if="${templates.size() == 0}">
                     <p class="text-muted">No products found.</p>
                 </div>
                 <div class="swap-img slide-up">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="border border-gray-800 rounded-2xl overflow-hidden flex flex-col h-full" th:each="template : ${temp}">
+                        <div class="border border-gray-800 rounded-2xl overflow-hidden flex flex-col h-full" th:each="template : ${templates}">
                             <img th:src="${template.getPhoto()}" alt="" class="w-full h-48 object-cover">
                             <div class="p-4 flex flex-col gap-1 flex-1">
                                 <h3 class="font-bold text-lg" th:text="${template.getTitle()}"></h3>
                                 <p class="text-sm text-black-300" th:text="${template.getDescription()}"></p>
                                 <p class="text-[#ffA630] font-semibold"
-                                   th:text="${template.price == '0' ? 'Bepul' : (template.price + ' UZS')}"></p>
+                                   th:text="${template.price == 0 ? 'Bepul' : (template.price + ' UZS')}"></p>
+                                <a th:if="${template.price > 0}"
+                                   th:href="@{/courses/free/{id}(id=${template.getId()})}"
+                                   class="mt-auto w-full py-2 rounded-lg text-white bg-green-600 text-center">
+                                    Sotib olish
+                                </a>
 
-                                <form th:action="@{/orders/create}" method="post">
+
+                                <form th:if="${template.price == 0}"
+                                      th:action="@{/orders/create}"
+                                      method="post">
                                     <input type="hidden" name="templateId" th:value="${template.getId()}">
-
-
-                                    <button type="submit" class="mt-auto w-full py-2 rounded-lg text-white bg-[#ffA630]">
-                                        Kursni olish
+                                    <button type="submit"
+                                            class="mt-auto w-full py-2 rounded-lg text-white bg-[#ffA630]">
+                                        Sotib olish
                                     </button>
                                 </form>
 

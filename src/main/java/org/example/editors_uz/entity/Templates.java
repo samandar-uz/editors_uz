@@ -19,7 +19,7 @@ import org.example.editors_uz.entity.abs.BaseEntity;
 public class Templates extends BaseEntity {
     private String title;
     private String description;
-    private String price;
+    private Integer price;
     private String photo;
     private String file;
 }

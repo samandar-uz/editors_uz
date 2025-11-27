@@ -339,13 +339,13 @@
                 Savatcham</h2>
             <!-- filter -->
 
-            <div class="text-center mt-5" th:if="${all.size() == 0}">
+            <div class="text-center mt-5" th:if="${orders.size() == 0}">
                 <p class="text-muted">No products found.</p>
             </div>
             <div class="swap-img slide-up">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div class="border border-gray-800 rounded-2xl overflow-hidden flex flex-col h-full"
-                         th:each="course : ${all}">
+                         th:each="course : ${orders}">
                         <img th:src="${course.getTemplate().getPhoto()}" alt="" class="w-full h-48 object-cover">
                         <div class="p-4 flex flex-col gap-1 flex-1">
                             <h3 class="font-bold text-lg" th:text="${course.getTemplate().getTitle()}"></h3>
