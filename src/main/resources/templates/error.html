@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="uz" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xatolik - Editors.uz</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-purple-50">
+<div class="text-center p-8">
+    <h1 class="text-9xl font-bold text-gray-800" th:text="${status}">404</h1>
+    <p class="text-2xl font-semibold text-gray-600 mt-4" th:text="${error}">Sahifa topilmadi</p>
+    <p class="text-gray-500 mt-2" th:text="${message}">So'ralgan sahifa mavjud emas</p>
+
+    <div class="mt-8">
+        <a href="/index" class="bg-[#ffA630] text-white px-6 py-3 rounded-lg hover:opacity-90 transition">
+            Bosh sahifaga qaytish
+        </a>
+    </div>
+
+    <div class="mt-4 text-sm text-gray-400" th:if="${timestamp}">
+        <p>Vaqt: <span th:text="${timestamp}"></span></p>
+        <p th:if="${path}">Yo'l: <span th:text="${path}"></span></p>
+    </div>
+</div>
+</body>
+</html>
