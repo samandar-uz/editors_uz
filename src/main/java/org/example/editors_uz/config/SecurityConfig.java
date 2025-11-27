@@ -28,31 +28,30 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/auth", "/logout")
+                        .ignoringRequestMatchers("/auth", "/logout", "/products")
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/auth",
                                 "/products",
-                                "/add",
+                                "/file/**",
                                 "/css/**",
                                 "/js/**",
                                 "/img/**",
                                 "/error"
                         ).permitAll()
+
                         .requestMatchers(
                                 "/",
-                                "/add",
                                 "/index",
                                 "/courses",
                                 "/templates",
+                                "/course/buy/**",
                                 "/basket",
                                 "/logout"
                         ).authenticated()
 
-
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-
+                        .requestMatchers("/add", "/admin/**").hasRole("ADMIN")
 
                         .anyRequest().authenticated()
                 )
@@ -61,7 +60,8 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint((request, response, authException) -> response.sendRedirect("/auth"))
+                        .authenticationEntryPoint((request, response, authException) ->
+                                response.sendRedirect("/auth"))
                 );
 
         return http.build();

@@ -228,15 +228,21 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
                         <div class="border border-gray-800 rounded-2xl overflow-hidden flex flex-col h-full" th:each="course : ${products}">
-                            <img th:src="${course.getPhoto()}" alt="" class="w-full h-48 object-cover">
+                            <img  th:src="|file/${course.getPhoto().getId()}|" alt="" class="w-full h-48 object-cover">
                             <div class="p-4 flex flex-col gap-1 flex-1">
-                                <h3 class="font-bold text-lg" th:text="${course.getTitle()}"></h3>
+                                <h3 class="font-bold text-lg" th:text="${course.getName()}"></h3>
                                 <p class="text-sm text-black-300" th:text="${course.getDescription()}"></p>
                                 <p class="text-[#ffA630] font-semibold"  th:text="${course.price == '0' ? 'Bepul' : (course.price + ' UZS')}"></p>
 
-                                <button class="mt-auto w-full py-2 rounded-lg text-white bg-[#ffA630] ">
-                                    Kursni olish
-                                </button>
+<!--                                <button class="mt-auto w-full py-2 rounded-lg text-white bg-[#ffA630] ">-->
+<!--                                    Kursni olish-->
+<!--                                </button>-->
+
+                                <a th:href="@{/course/buy/{id}(id=${course.getId() })}"
+                                   class="mt-auto w-full py-2 rounded-lg text-white bg-green-600 text-center">
+                                    Sotib olish
+                                </a>
+
                             </div>
 
                         </div>

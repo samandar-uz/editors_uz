@@ -20,6 +20,8 @@ public class User extends BaseEntity {
     private String password;
     @Column(nullable = false)
     private String role = "USER";
+    @Column(nullable = false)
+    private Integer salary = 0;
     private boolean enabled = true;
     private String key;
 

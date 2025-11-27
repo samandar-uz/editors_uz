@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="uz" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Kurs Sotib Olish</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-400 to-purple-500 p-4">
+
+<!-- Success -->
+<div th:if="${success}" class="fixed inset-0 flex items-center justify-center bg-black/50">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md text-center">
+        <i class="bi bi-check-circle-fill text-green-500 text-5xl mb-3"></i>
+        <h2 class="text-2xl font-bold">Tabriklaymiz! 🎉</h2>
+        <p>Kurs muvaffaqiyatli sotib olindi</p>
+
+        <div class="border rounded-xl p-4 mt-4">
+            <p><b th:text="${courseName}">Kurs nomi</b></p>
+            <p class="text-green-600 text-xl font-bold" th:text="${coursePrice} + ' UZS'">0 UZS</p>
+        </div>
+
+        <div class="mt-4 flex gap-2">
+            <a href="/basket" class="flex-1 bg-green-500 text-white py-2 rounded-lg">Savat</a>
+            <a href="/courses" class="flex-1 bg-gray-200 py-2 rounded-lg">Kurslar</a>
+        </div>
+    </div>
+</div>
+
+<!-- Error -->
+<div th:if="${error}" class="fixed inset-0 flex items-center justify-center bg-black/50">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md text-center">
+        <i class="bi bi-x-circle-fill text-red-500 text-5xl mb-3"></i>
+        <h2 class="text-2xl font-bold">Xatolik! 😔</h2>
+        <p class="text-red-600 font-semibold" th:text="${error}">Balans yetarli emas</p>
+
+        <div class="border rounded-xl p-4 mt-4">
+            <p><b th:text="${courseName}">Kurs nomi</b></p>
+            <p>Kurs narxi: <b th:text="${coursePrice} + ' UZS'">0 UZS</b></p>
+            <p>Sizning balansingiz: <b th:text="${userBalance} + ' UZS'">0 UZS</b></p>
+        </div>
+
+        <div class="mt-4 flex gap-2">
+            <a href="/balance/add" class="flex-1 bg-blue-500 text-white py-2 rounded-lg">Balans to'ldirish</a>
+            <a href="/courses" class="flex-1 bg-gray-200 py-2 rounded-lg">Ortga</a>
+        </div>
+    </div>
+</div>
+
+<!-- Loading -->
+<div th:unless="${success} or ${error}" class="text-center bg-white p-6 rounded-2xl shadow-md">
+    <div class="animate-spin h-10 w-10 border-4 border-b-transparent border-purple-600 rounded-full mx-auto"></div>
+    <p class="text-gray-600 mt-3">Iltimos kuting...</p>
+</div>
+
+<script>
+    // Avtomatik qayta yo‘naltirish
+    setTimeout(() => {
+        if (document.querySelector('[th\\:if="${success}"]')) location.href = '/basket';
+        if (document.querySelector('[th\\:if="${error}"]')) location.href = '/courses';
+    }, 5000);
+</script>
+
+</body>
+</html>

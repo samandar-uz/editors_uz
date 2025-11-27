@@ -18,7 +18,7 @@ import org.example.editors_uz.entity.abs.BaseEntity;
 public class Product extends BaseEntity {
     private String name;
     private String description;
-    private String price;
+    private Integer price;
     @ManyToOne
     private Attachment photo;
 
