@@ -7,19 +7,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import org.example.editors_uz.entity.Attachment;
 import org.example.editors_uz.entity.abs.BaseEntity;
 
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 @SuperBuilder
-public class Product extends BaseEntity {
-    private String name;
-    private String description;
-    private String price;
+public class AttachmentContent  extends BaseEntity {
     @ManyToOne
-    private Attachment photo;
-
+    private Attachment attachment;
+    private byte[] content;
 }

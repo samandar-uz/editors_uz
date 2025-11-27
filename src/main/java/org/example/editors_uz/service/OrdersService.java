@@ -13,8 +13,6 @@ import org.example.editors_uz.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -25,7 +23,7 @@ public class OrdersService {
     private final TemplatesRepository templatesRepository;
 
     @Transactional
-    public Orders createOrder(Integer userId, Integer templateId) {
+    public void createOrder(Integer userId, Integer templateId) {
         log.info("Buyurtma yaratish boshlandi: userId={}, templateId={}", userId, templateId);
 
         User user = userRepository.findById(userId)
@@ -46,18 +44,7 @@ public class OrdersService {
         Orders savedOrder = ordersRepository.save(order);
         log.info("Buyurtma muvaffaqiyatli yaratildi: orderId={}", savedOrder.getId());
 
-        return savedOrder;
     }
 
-    @Transactional(readOnly = true)
-    public List<Orders> getUserOrders(Integer userId) {
-        log.info("Foydalanuvchi buyurtmalari yuklanmoqda: userId={}", userId);
-        return ordersRepository.findAllByUserId(userId);
-    }
-
-    @Transactional(readOnly = true)
-    public boolean hasUserPurchased(Integer userId, Integer templateId) {
-        return ordersRepository.existsByUserIdAndTemplateId(userId, templateId);
-    }
 }
 

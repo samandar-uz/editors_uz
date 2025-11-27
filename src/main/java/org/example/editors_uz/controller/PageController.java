@@ -64,4 +64,9 @@ public class PageController {
     public String loginPage(@CookieValue(value = "AUTH_TOKEN", required = false) String token) {
         return getAuthenticatedUser(token) != null ? "redirect:/index" : "auth";
     }
+
+    @GetMapping("/add")
+    public String addProduct() {
+        return "add-product";
+    }
 }

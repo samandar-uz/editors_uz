@@ -31,7 +31,6 @@ public class AuthController {
             User user = userRepository.findByUsername(username).orElse(null);
 
             if (user != null) {
-                // Login
                 if (!passwordEncoder.matches(password, user.getPassword())) {
                     model.addAttribute("errorMessage", "❌ Parol noto'g'ri!");
                     return "auth";
@@ -47,10 +46,8 @@ public class AuthController {
                 homeService.addAuthCookie(response, token);
 
                 log.info("Foydalanuvchi tizimga kirdi: {}", username);
-                return "redirect:/index";
 
             } else {
-                // Register
                 User newUser = new User();
                 String token = homeService.generateToken();
                 newUser.setUsername(username);
@@ -59,12 +56,11 @@ public class AuthController {
                 newUser.setEnabled(true);
                 newUser.setRole("USER");
                 userRepository.save(newUser);
-
                 homeService.addAuthCookie(response, token);
                 log.info("Yangi foydalanuvchi ro'yxatdan o'tdi: {}", username);
 
-                return "redirect:/index";
             }
+            return "redirect:/index";
 
         } catch (Exception e) {
             log.error("Autentifikatsiya xatosi: {}", e.getMessage(), e);
