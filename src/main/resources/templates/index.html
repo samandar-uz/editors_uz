@@ -1,0 +1,602 @@
+<?php
+
+?>
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phtoshop Editors Online Web site</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+
+        @keyframes sakuraFall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ffA630;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ffA630;
+        }
+
+        /* Mobile nav indicator */
+
+        @media (max-width: 768px) {
+        }
+
+        @media (min-width: 769px) {
+        }
+
+        body {
+            background-color: #fff;
+            background-size: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #000000;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        .swap-img {
+            opacity: 0;
+            transition: opacity 0.7s linear;
+        }
+
+        .fade-in {
+            animation: fadeIn 1.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .slide-down,
+        .slide-right {
+            animation: slideDown 1s forwards;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-up,
+        .slide-left {
+            animation: slideUp 1s forwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out, box-shadow 0.2s ease-out;
+            z-index: 9999;
+            background: transparent;
+        }
+    </style>
+
+    <script>tailwind.config = {theme: {extend: {colors: {primary: '#0008ff', secondary: '#6a3093'},
+                borderRadius: {
+                    'none': '0px',
+                    'sm': '4px',
+                    DEFAULT: '8px',
+                    'md': '12px',
+                    'lg': '16px',
+                    'xl': '20px',
+                    '2xl': '24px',
+                    '2xl': '32px',
+                    'full': '9999px',
+                    'button': '8px'
+                }
+            }
+        }
+    }</script>
+</head>
+
+<body class="min-h-screen container mx-auto" style="max-width: 1200px; margin: 0 auto;">
+<div class="cursor" id="cursor"></div>
+
+<header class="container">
+    <div class="fixed top-0 left-0 w-full z-50 bg-white lg:block hidden slide-left">
+        <div class="flex items-center justify-between"
+             style="max-width: 1200px; margin: 0 auto; margin-top: 10px; border-radius: 30px; height: 70px;">
+            <a href="/"><img src="img/logo.png" alt="" class="h-7"></a>
+            <div class="flex items-center">
+                <ul class="flex"
+                    style="justify-content: space-evenly; width: 600px; list-style-type: none; font-size: 16px;">
+                    <a href="/" class="text-[#ffA630]">
+                        <li>Bosh sahifa</li>
+                    </a>
+                    <a href="/courses" class="hover:text-[#ffA630]">
+                        <li>Kurslar</li>
+                    </a>
+                    <a href="/templates" class="hover:text-[#ffA630]">
+                        <li class=" text-center">Fayllar</li>
+                    </a>
+                    <a href="#maqsad" class="hover:text-[#ffA630]">
+                        <li>Biz haqimizda</li>
+                    </a>
+                    <a href="#aloqa" class="hover:text-[#ffA630]">
+                        <li>Aloqa</li>
+                    </a>
+                </ul>
+                <button class="relative inline-flex items-center justify-center p-2 bg-transparent border-0"
+                        aria-label="Savatcha">
+                    <a href="/basket" class="inline-flex items-center justify-center">
+                        <i class="bi bi-basket text-xl"></i>
+                    </a>
+                    <span
+                            class="hidden top-3 right-1 translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-red-600 shadow-sm ring-2 ring-white"
+                            aria-hidden="true"></span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="lg:hidden fixed top-0 left-0 w-full z-50 bg-white">
+    <div class="flex items-center justify-between mt-4">
+        <a href="/"><img src="img/logo.png" alt="" class="h-7 ml-2"></a>
+        <div class="flex items-center">
+            <button><a href="/basket"><i class="bi bi-basket text-[#000] text-2xl cursor-pointer mr-4"></i></a></button>
+            <button id="menu-btn"><i class="bi bi-list text-[#000] text-3xl cursor-pointer mr-4"></i></button>
+        </div>
+
+    </div>
+    <div id="mobile-menu" class="hidden bg-white/95 backdrop-blur-sm container ">
+        <a href="/" class="hover:text-[#ffA630]">
+            <li class="pl-4 py-2 text-center">Bosh sahifa</li>
+        </a>
+        <a href="/courses" class="hover:text-[#ffA630]">
+            <li class="pl-4 py-2 text-center">Kurslar</li>
+        </a>
+        <a href="#maqsad" class="hover:text-[#ffA630]">
+            <li class="pl-4 py-2 text-center">Biz haqimizda</li>
+        </a>
+        <a href="/templates" class="hover:text-[#ffA630]">
+            <li class="pl-4 py-2 text-center">Faylar</li>
+        </a>
+        <a href="#aloqa" class="hover:text-[#ffA630]">
+            <li class="pl-4 py-2 text-center">Aloqa</li>
+        </a>
+    </div>
+</div>
+
+<div class="h-[70px] lg:h-[100px]"></div>
+
+<main class="px-6 md:block">
+    <section
+            class="swap-img slide-down w-full hidden md:block bg-[url('img/hero.png')] bg-cover bg-center rounded-2xl">
+        <section class="rounded-2xl relative z-20 px-5 lg:px-10 py-10 sm:py-16 md:py-20
+                    max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-10">
+            <div class="hidden md:block w-full md:w-1/2 h-[300px]">
+                <h1 class="sm:text-2xl md:text-4xl uppercase leading-snug font-bold text-white">
+                    Montaj uchun <br> dasturlar: Photoshop <br> After Effects
+                </h1>
+                <p class="hidden lg:block text-base sm:text-lg max-w-[600px] font-normal leading-6 text-white mt-3">
+                    Boshlovchilar va professionallar uchun video montaj bo'yicha
+                    ta'lim dasturlari va kurslar jamlangan platforma.
+                </p>
+                <details class="lg:hidden">
+                    <summary class="text-white cursor-pointer mt-4 flex items-center gap-2">
+                        Batafsil ma'lumot olish <i class="bi bi-chevron-down"></i>
+                    </summary>
+                    <p class="text-base sm:text-lg max-w-[600px] font-normal leading-6 text-white mt-2">
+                        Boshlovchilar va professionallar uchun video montaj bo'yicha
+                        ta'lim dasturlari va kurslar jamlangan platforma.
+                    </p>
+                </details>
+                <button
+                        class="hidden md:block lg:mt-10 mt-4 text-[15px] uppercase rounded-[8px] py-3 px-4 text-white w-[220px]"
+                        style="border: solid 1px white; background-color: transparent; backdrop-filter: blur(10px);">
+                    Ko'rish
+                </button>
+            </div>
+        </section>
+    </section>
+
+
+    <section class="swap-img slide-down w-full ">
+        <section class="block lg:hidden h-[200px]  bg-[url('img/hero.png')] bg-cover bg-center rounded-xl">
+        </section>
+    </section>
+
+    <section>
+        <div class="flex gap-5 mt-5 fade-in">
+            <button><i class="bi bi-arrow-left-circle text-4xl text-[#ffA630]"></i></button>
+            <button><i class="bi bi-arrow-right-circle text-4xl text-[#ffA630]"></i></button>
+        </div>
+    </section>
+
+    <section class="lg:mt-10">
+        <div>
+            <h2
+                    class="swap-img slide-down text-xl md:text-2xl uppercase leading-snug font-bold text-black pb-4 sm:pb-5 mt-5">
+                Bizning kursmiz <br>tanlovlar
+            </h2>
+            <div
+                    class="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5 text-center swap-img slide-up">
+                <div class="p-4">
+                    <h3 class="uppercase font-bold whitespace-nowrap overflow-hidden truncate">Olingan kurslar</h3>
+                    <p class="counter text-2xl font-bold text-[#ffA630] mt-2" data-target="1000">0</p>
+                </div>
+
+                <div class="p-4 ">
+                    <h3 class="uppercase font-bold whitespace-normal whitespace-nowrap overflow-hidden truncate">
+                        Barcha kurslar</h3>
+                    <p class="counter text-2xl font-bold text-[#ffA630] mt-2" data-target="50">0</p>
+                </div>
+
+                <div class="p-4 ">
+                    <h3 class="uppercase font-bold">Mutaxassislar</h3>
+                    <p class="counter text-2xl font-bold text-[#ffA630] mt-2" data-target="20">0</p>
+                </div>
+
+                <div class="p-4 ">
+                    <h3 class="uppercase font-bold">Tajriba</h3>
+                    <p class="counter text-2xl font-bold text-[#ffA630] mt-2" data-target="2">0</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h1 class="bg-gradient-to-l from-stone-300/0 to-slate-300 rounded-2xl"
+            style="height: 5px; margin-top: 20px;"></h1>
+    </section>
+
+    <h2
+            class="swap-img slide-down text-xl md:text-2xl uppercase leading-snug font-bold text-black pb-4 sm:pb-5 mt-5">
+        Ish Namunlari</h2>
+
+    <section
+            class="swap-img slide-left lg:block py-10 flex flex-col md:flex-row items-center rounded-4xl relative bg-gradient-to-l from-stone-300/0 to-slate-300"
+            style="border-radius: 30px; ">
+        <img alt="dd" src="img/slection2.png"
+             class="hidden lg:block absolute bottom-0 opacity-75 md:opacity-100 right-0 w-[60%] md:w-[30%] max-w-[300px] md:max-w-none lg:block mr-10">
+        <section class="grid grid-cols-12 px-4 md:px-16 z-20 h-full">
+            <section class="col-span-12 sm:col-span-8 md:col-span-4 h-full flex flex-col justify-between">
+                <section>
+                    <h1
+                            class="text-2xl text-center md:text-left md:text-2xl leading-tight font-bold text-main-primary">
+                        Kurslar</h1>
+                    <p class="text-base leading-relaxed line-clamp-4 text-main-dark font-medium py-5">Boshlang'ich
+                        va professional montajchilar uchun Photoshop va After Effects dasturlarini o'rganish uchun
+                        kurslar. Amaliy mashg'ulotlar va real loyihalar orqali o'z mahoratingizni oshiring.</p>
+                </section>
+                <a href="courses.html" target="_blank"
+                   class="text-white px-5 py-2 rounded-xl inline-block text-center bg-[#ffA630] mt-10">
+                    KURSLARNI KO'RISH
+                </a>
+            </section>
+        </section>
+    </section>
+
+    <section class="px-10 mt-5 md:block lg:mt-10 swap-img fade-in">
+        <h1 class="bg-gradient-to-l from-stone-300/0 to-slate-300 rounded-2xl"
+            style="height: 5px; margin-top: 20px;"></h1>
+    </section>
+
+    <section
+            class="swap-img slide-right lg:block mt-5 my-0 md:my-10 py-10 md:py-18 flex flex-col md:flex-row items-center rounded-4xl relative bg-gradient-to-l from-stone-300/0 to-slate-300"
+            style="border-radius: 30px; ">
+        <img alt="dd" src="img/section3.png"
+             class="hidden lg:block absolute bottom-0 opacity-75 md:opacity-100 right-0 w-[60%] md:w-[40%] max-w-[300px] md:max-w-none lg:block mr-10 mt-[-50px]">
+        <section class="grid grid-cols-12 px-4 md:px-16 z-20 h-full">
+            <section class="col-span-12 sm:col-span-8 md:col-span-4 h-full flex flex-col justify-between">
+                <section>
+                    <h1
+                            class="up text-2xl text-center md:text-left md:text-2xl leading-tight font-bold text-main-primary">
+                        Faylar</h1>
+                    <p class="text-base leading-relaxed line-clamp-4 text-main-dark font-medium py-5">Harakatli
+                        grafika, vizual effektlar va kompozitsiya uchun sanoat standarti bo'lgan After Effects
+                        dasturini o'rganing. G'oyalaringizni professional animatsiyalarga aylantiring.</p>
+                </section>
+                <a target="_blank"
+                   class="text-white px-5 py-2 rounded-xl inline-block text-center bg-[#ffA630] mt-10" href="/">
+                    FAYLARNI KO'RISH
+                </a>
+            </section>
+        </section>
+    </section>
+    <h2
+            class="swap-img slide-down text-xl sm:text-2xl md:text-2xl uppercase leading-snug font-bold text-black pb-4 sm:pb-5 lg:block mt-5">
+        Biz haqimizda</h2>
+    <section class="swap-img slide-down w-full rounded-4xl bg-[#EAEAFF] px-6 py-6 md:p-16 lg:block mt-2"
+             style="border-radius: 30px;" id="maqsad">
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-7">
+            <section class="md:col-span-5"><img src="img/admin.jpg" alt="boy" class="w-full rounded-2xl">
+            </section>
+            <section class="md:col-span-7 flex flex-col justify-center pt-2 md:pt-0">
+                <h1 class="text-2xl md:text-4xl font-bold leading-9 md:leading-[3rem] uppercase text-main-dark">
+                    Bizning Biz haqimizda </h1>
+                <p class="text-base leading-relaxed line-clamp-4 text-main-dark font-medium py-5">Harakatli
+                    grafika, vizual effektlar va kompozitsiya uchun sanoat standarti bo'lgan After Effects
+                    dasturini o'rganing. G'oyalaringizni professional animatsiyalarga aylantiring.</p>
+                <section class="flex flex-col items-start py-4 gap-3 hidden lg:block">
+                    <section class="flex items-center gap-3"><i class="bi bi-check text-2xl"></i>
+                        <h2 class="text-base md:text-lg font-medium text-main-dark"> Kreativ foto tahrirlash va
+                            retush </h2>
+                    </section>
+                    <section class="flex items-center gap-3"><i class="bi bi-check text-2xl"></i>
+                        <h2 class="text-base md:text-lg font-medium text-main-dark"> Portfolio uchun amaliy
+                            loyihalar </h2>
+                    </section>
+                    <section class="flex items-center gap-3"><i class="bi bi-check text-2xl"></i>
+                        <h2 class="text-base md:text-lg font-medium text-main-dark"> Grafik dizayn asoslari </h2>
+                    </section>
+                </section>
+            </section>
+            <details>
+                <summary class="text-[#ffA630] cursor-pointer md:mt-0 lg:hidden flex items-center gap-2">
+                    Ko'proq ma'lumot olish <i class="bi bi-chevron-down"></i>
+                </summary>
+                <section class="flex flex-col items-start py-4 gap-3 lg:hidden mt-2">
+                    <section class="flex items-center gap-3"><i class="bi bi-check text-2xl"></i>
+                        <h2 class="text-base md:text-lg font-medium text-main-dark"> Kreativ foto tahrirlash va
+                            retush </h2>
+                    </section>
+                    <section class="flex items-center gap-3"><i class="bi bi-check text-2xl"></i>
+                        <h2 class="text-base md:text-lg font-medium text-main-dark"> Portfolio uchun amaliy
+                            loyihalar </h2>
+                    </section>
+                    <section class="flex items-center gap-3"><i class="bi bi-check text-2xl"></i>
+                        <h2 class="text-base md:text-lg font-medium text-main-dark"> Grafik dizayn asoslari </h2>
+                    </section>
+                </section>
+            </details>
+        </section>
+    </section>
+
+    <section class="mt-10 " id="aloqa">
+        <h2
+                class="swap-img slide-down text-xl md:text-2xl uppercase leading-snug font-bold text-black pb-4 sm:pb-5">
+            Aloqa
+        </h2>
+        <section class="mb-16 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="fade-in">
+                    <h2 class="text-xl md:text-2xl uppercase font-bold text-black mb-4">Qo'shimcha Ma'lumot</h2>
+                    <p class="mb-4">Agar sizda savollar bo'lsa yoki hamkorlik qilishni istasangiz, quyidagi
+                        ma'lumotlar orqali biz bilan bog'lanishingiz mumkin:</p>
+
+                    <div class="flex items-center mb-3">
+                        <i class="bi bi-envelope text-[#ffA630] text-xl mr-3"></i>
+                        <span>info@photoshopeditors.uz</span>
+                    </div>
+
+                    <div class="flex items-center mb-3">
+                        <i class="bi bi-telephone text-[#ffA630] text-xl mr-3"></i>
+                        <span>+998 90 123 45 67</span>
+                    </div>
+
+                    <div class="flex items-center">
+                        <i class="bi bi-clock text-[#ffA630] text-xl mr-3"></i>
+                        <span>Ish vaqti: 9:00 - 18:00</span>
+                    </div>
+                </div>
+
+                <div class="fade-in">
+                    <h2 class="text-xl md:text-2xl uppercase font-bold text-black mb-4">Yangiliklar Obunasi</h2>
+                    <p class="mb-4">Yangi kurslar va aksiyalar haqida birinchi bo'lib xabardor bo'lish uchun obuna
+                        bo'ling:</p>
+
+                    <div>
+                        <p class="text-1xl flex items-center gap-2"><i
+                                class="bi bi-instagram text-2xl"></i>INSTAGRAM KANAL</p>
+                        <p class="text-1xl flex items-center gap-2"><i class="bi bi-telegram text-2xl"></i>TELEGRAM
+                            KANAL</p>
+                        <p class="text-1xl flex items-center gap-2"><i class="bi bi-youtube text-2xl"></i>YOUTUBE
+                            KANAL</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+
+</main>
+
+<footer class="bg-gray-900 text-white py-10 mt-10"
+        style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="md:col-span-1">
+                <img src="img/logo.png" alt="Logo" class="h-8 mb-4">
+                <p class="text-sm">Montaj uchun dasturlar: Photoshop va After Effects bo'yicha ta'lim platformasi.
+                </p>
+            </div>
+            <div class="md:col-span-1 hidden md:block">
+                <h3 class="text-lg font-bold mb-4">Havolalar</h3>
+                <ul class="space-y-2">
+                    <li><a href="#loyihalar" class="hover:text-blue-200">Loyihalar</a></li>
+                    <li><a href="#kurslar" class="hover:text-blue-200">Kurslar</a></li>
+                    <li><a href="#Biz haqimizda" class="hover:text-blue-200">Biz haqimizda</a></li>
+                    <li><a href="#ish-namunlari" class="hover:text-blue-200">Ish Namunlari</a></li>
+                    <li><a href="#aloqa" class="hover:text-blue-200">Aloqa</a></li>
+                </ul>
+            </div>
+            <div class="md:col-span-1">
+                <h3 class="text-lg font-bold mb-4">Aloqa</h3>
+                <p class="text-sm mb-2">Email: info@photoshopeditors.uz</p>
+                <p class="text-sm mb-2">Telefon: +998 90 123 45 67</p>
+                <p class="text-sm">Manzil: Toshkent, O'zbekiston</p>
+            </div>
+            <div class="md:col-span-1">
+                <h3 class="text-lg font-bold mb-4">Ijtimoiy tarmoqlar</h3>
+                <div class="flex space-x-4">
+                    <a href="#" class="hover:text-blue-200"><i class="bi bi-facebook text-2xl"></i></a>
+                    <a href="#" class="hover:text-blue-200"><i class="bi bi-instagram text-2xl"></i></a>
+                    <a href="#" class="hover:text-blue-200"><i class="bi bi-telegram text-2xl"></i></a>
+                    <a href="#" class="hover:text-blue-200"><i class="bi bi-youtube text-2xl"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white/20 mt-8 pt-6 text-center">
+            <p class="text-sm">&copy; <a href="https://finecoder.uz">FineCoder.Uz tomonidan ishlab chiqilgan.</a>
+            </p>
+        </div>
+    </div>
+</footer>
+<script>
+    const cursor = document.getElementById('cursor');
+
+    document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const counters = document.querySelectorAll(".counter");
+
+        const startCounter = (counter) => {
+            const target = +counter.getAttribute("data-target");
+            let count = 0;
+            const speed = target / 50;
+
+            const update = () => {
+                count += speed;
+                if (count < target) {
+                    counter.innerText = Math.floor(count);
+                    requestAnimationFrame(update);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+
+            update();
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {threshold: 0.5});
+
+        counters.forEach(counter => observer.observe(counter));
+    });
+</script>
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+
+    menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        if (mobileMenu.classList.contains('hidden')) {
+            menuIcon.classList.remove('ri-close-line');
+            menuIcon.classList.add('ri-menu-line');
+        } else {
+            menuIcon.classList.remove('ri-menu-line');
+            menuIcon.classList.add('ri-close-line');
+        }
+    });
+
+    const navLinks = document.querySelectorAll('#mobile-menu a');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            menuIcon.classList.remove('ri-close-line');
+            menuIcon.classList.add('ri-menu-line');
+        });
+    });
+
+    document.addEventListener('click', (event) => {
+        const isClickInsideMenu = mobileMenu.contains(event.target);
+        const isClickOnMenuButton = menuBtn.contains(event.target);
+
+        if (!mobileMenu.classList.contains('hidden') && !isClickInsideMenu && !isClickOnMenuButton) {
+            mobileMenu.classList.add('hidden');
+            menuIcon.classList.remove('ri-close-line');
+            menuIcon.classList.add('ri-menu-line');
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+            let target = document.querySelector(this.getAttribute("href"));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+        });
+    });
+</script>
+</body>
+
+</html>
