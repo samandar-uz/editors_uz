@@ -1,5 +1,10 @@
 package org.example.editors_uz.util;
 
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+
+@Component
 public class PriceFormatter {
 
     public static String format(String price) {
@@ -14,7 +19,7 @@ public class PriceFormatter {
         }
     }
 
-    public static boolean isFree(String price) {
-        return price == null || price.equals("0");
+    public String formatAmount(BigDecimal amount) {
+        return String.format("%,d", amount.longValue()).replace(',', ' ');
     }
 }

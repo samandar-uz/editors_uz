@@ -25,44 +25,24 @@ public class CourseBuyController {
     private final OrdersService ordersService;
 
     @GetMapping("/buy/{templateId}")
-    public String buyCoursePage(
-            @PathVariable Integer templateId,
-            @CookieValue(value = "AUTH_TOKEN", required = false) String token,
-            Model model) {
+    public String buyCoursePage(@PathVariable Integer templateId, @CookieValue(value = "AUTH_TOKEN", required = false) String token, Model model) {
 
         try {
-            // User tekshirish
-            if (token == null) {
-                return "redirect:/auth";
-            }
-
-            User user = userRepository.findByKey(token)
-                    .orElseThrow(() -> new RuntimeException("User topilmadi!"));
-
-            Product product = templatesRepository.findById(templateId)
-                    .orElseThrow(() -> new RuntimeException("Product topilmadi!"));
+            User user = userRepository.findByKey(token).orElseThrow(() -> new RuntimeException("User topilmadi!"));
+            Product product = templatesRepository.findById(templateId).orElseThrow(() -> new RuntimeException("Product topilmadi!"));
 
 
-            log.info("Sotib olish sahifasi: user={}, template={}, price={}, userBalance={}",
-                    user.getUsername(), product.getName(), product.getPrice(), user.getSalary());
+            log.info("Sotib olish sahifasi: user={}, template={}, price={}, userBalance={}", user.getUsername(), product.getName(), product.getPrice(), user.getSalary());
 
-            // Balans tekshirish
             if (user.getSalary() >= product.getPrice()) {
-                // Balans yetarli - sotib olish
                 Integer oldBalance = user.getSalary();
                 Integer newBalance = oldBalance - product.getPrice();
-
-                // Order yaratish
                 ordersService.createOrder(user.getId(), templateId);
-
-                // Balansni yangilash
                 user.setSalary(newBalance);
                 userRepository.save(user);
 
-                log.info("Kurs muvaffaqiyatli sotib olindi: orderId created, oldBalance={}, newBalance={}",
-                        oldBalance, newBalance);
+                log.info("Kurs muvaffaqiyatli sotib olindi: orderId created, oldBalance={}, newBalance={}", oldBalance, newBalance);
 
-                // Success ma'lumotlari
                 model.addAttribute("success", true);
                 model.addAttribute("courseName", product.getName());
                 model.addAttribute("coursePrice", product.getPrice());
@@ -70,11 +50,9 @@ public class CourseBuyController {
                 model.addAttribute("newBalance", newBalance);
 
             } else {
-                // Balans yetarli emas
                 Integer needed = product.getPrice() - user.getSalary();
 
-                log.warn("Balans yetarli emas: need={}, has={}, required={}",
-                        needed, user.getSalary(), product.getPrice());
+                log.warn("Balans yetarli emas: need={}, has={}, required={}", needed, user.getSalary(), product.getPrice());
 
                 model.addAttribute("error", "Balansingiz yetarli emas!");
                 model.addAttribute("courseName", product.getName());

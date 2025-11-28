@@ -17,13 +17,11 @@ public class OrdersController {
     private final UserRepository userRepository;
 
     private User getAuthenticatedUser(String token) {
-        return userRepository.findByKey(token)
-                .orElseThrow(() -> new RuntimeException("User topilmadi!"));
+        return userRepository.findByKey(token).orElseThrow(() -> new RuntimeException("User topilmadi!"));
     }
+
     @PostMapping("/create")
-    public String createOrder(@RequestParam("templateId") Integer templateId,
-                              @CookieValue(value = "AUTH_TOKEN", required = false) String token,
-                              RedirectAttributes redirectAttributes) {
+    public String createOrder(@RequestParam("templateId") Integer templateId, @CookieValue(value = "AUTH_TOKEN", required = false) String token, RedirectAttributes redirectAttributes) {
         try {
             if (token == null || userRepository.findByKey(token).isEmpty()) {
                 redirectAttributes.addFlashAttribute("error", "Iltimos, tizimga kiring!");

@@ -60,15 +60,13 @@ public class PageController {
         return "basket";
     }
 
+
     @GetMapping("/auth")
-    public String loginPage(@CookieValue(value = "AUTH_TOKEN", required = false) String token) {
-        return getAuthenticatedUser(token) != null ? "redirect:/index" : "auth";
-    }
-    @GetMapping("balance/add")
-    public String addProduct(@CookieValue(value = "AUTH_TOKEN", required = false) String token, Model model) {
-        User user = getAuthenticatedUser(token);
-        if (user == null) return "redirect:/auth";
-        return "add-balance";
+    public String authPage(@CookieValue(value = "AUTH_TOKEN", required = false) String token) {
+        if (token != null && userRepository.findByKey(token).isPresent()) {
+            return "redirect:/index";
+        }
+        return "auth";
     }
 
     @GetMapping("/add")

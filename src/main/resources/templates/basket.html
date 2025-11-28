@@ -224,25 +224,25 @@
 
 
 
-<div th:if="${success}"
-     class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
-    <div class="flex items-center gap-2">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-        </svg>
-        <span th:text="${success}"></span>
-    </div>
-</div>
+<!--<div th:if="${success}"-->
+<!--     class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">-->
+<!--    <div class="flex items-center gap-2">-->
+<!--        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">-->
+<!--            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>-->
+<!--        </svg>-->
+<!--        <span th:text="${success}"></span>-->
+<!--    </div>-->
+<!--</div>-->
 
-<div th:if="${error}"
-     class="fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
-    <div class="flex items-center gap-2">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-        </svg>
-        <span th:text="${error}"></span>
-    </div>
-</div>
+<!--<div th:if="${error}"-->
+<!--     class="fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">-->
+<!--    <div class="flex items-center gap-2">-->
+<!--        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">-->
+<!--            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>-->
+<!--        </svg>-->
+<!--        <span th:text="${error}"></span>-->
+<!--    </div>-->
+<!--</div>-->
 
 
 
@@ -346,12 +346,12 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div class="border border-gray-800 rounded-2xl overflow-hidden flex flex-col h-full"
                          th:each="course : ${orders}">
-                        <img th:src="${course.getTemplate().getPhoto()}" alt="" class="w-full h-48 object-cover">
+                        <img th:src="|file/${course.getProduct().getPhoto()}|" alt="" class="w-full h-48 object-cover">
                         <div class="p-4 flex flex-col gap-1 flex-1">
-                            <h3 class="font-bold text-lg" th:text="${course.getTemplate().getTitle()}"></h3>
-                            <p class="text-sm text-black-300" th:text="${course.getTemplate().getDescription()}"></p>
+                            <h3 class="font-bold text-lg" th:text="${course.getProduct().getName()}"></h3>
+                            <p class="text-sm text-black-300" th:text="${course.getProduct().getDescription()}"></p>
                             <button class="mt-auto w-full py-2 rounded-lg text-white bg-[#ffA630] ">
-                                <i class="bi bi-cloud-arrow-down"></i> YUKLAB OLISH
+                                <i class="bi bi-cloud-arrow-down"></i> OCHISH
                             </button>
                         </div>
 
