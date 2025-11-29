@@ -33,7 +33,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/auth",
-                                "/products",
                                 "/file/**",
                                 "/css/**",
                                 "/js/**",

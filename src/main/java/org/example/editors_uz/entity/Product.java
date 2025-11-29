@@ -1,7 +1,6 @@
 package org.example.editors_uz.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +20,9 @@ public class Product extends BaseEntity {
     private Integer price;
     @ManyToOne
     private Attachment photo;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false, length = 20)
+    private OrderType orderType;
 
 }

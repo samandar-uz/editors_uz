@@ -25,29 +25,50 @@ public class OrdersService {
     private final ProductRepository productRepository;
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public void createOrder(Integer userId, Integer productId) {
-        log.info("Creating order: userId={}, productId={}", userId, productId);
-        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User topilmadi! ID: " + userId));
+    public String createOrder(Integer userId, Integer productId) {
 
-        Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product topilmadi! ID: " + productId));
+        log.info("Creating order: userId={}, productId={}", userId, productId);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User topilmadi! ID: " + userId));
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product topilmadi! ID: " + productId));
+
         if (ordersRepository.existsByUserIdAndProductId(userId, productId)) {
             log.warn("Duplicate order attempt: userId={}, productId={}", userId, productId);
             throw new DuplicateResourceException("Siz bu kursni allaqachon sotib olgansiz!");
         }
+
         if (product.getPrice() > 0) {
             if (user.getSalary() < product.getPrice()) {
                 log.warn("Insufficient balance: userId={}, balance={}, required={}", userId, user.getSalary(), product.getPrice());
                 throw new InsufficientBalanceException(String.format("Balansingiz yetarli emas! Kerak: %d UZS, Mavjud: %d UZS", product.getPrice(), user.getSalary()));
             }
+
             user.setSalary(user.getSalary() - product.getPrice());
             userRepository.save(user);
-            log.info("User balance updated: userId={}, newBalance={}", userId, user.getSalary());
+            log.info("User balans yangilandi: userId={}, newBalance={}", userId, user.getSalary());
         }
-        Orders order = Orders.builder().user(user).product(product).build();
 
-        Orders savedOrder = ordersRepository.save(order);
-        log.info("Order created successfully: orderId={}, userId={}, productId={}", savedOrder.getId(), userId, productId);
+        Orders order = Orders.builder()
+                .user(user)
+                .product(product)
+                .build();
 
+        Orders savedOrder = ordersRepository.save(order); // UUID shu paytda qo‘shiladi
+
+        log.info("Order yaratildi: orderId={}, accessUuid={}", savedOrder.getId(), savedOrder.getAccessUuid());
+        return savedOrder.getAccessUuid();  // <-- TO‘G‘RI YER
     }
 
+    public boolean existsByUserIdAndProductId(Integer userId, Integer productId) {
+        return ordersRepository.existsByUserIdAndProductId(userId, productId);
+    }
+
+    public String getAccessUuid(Integer userId, Integer productId) {
+        return ordersRepository.findByUserIdAndProductId(userId, productId)
+                .map(Orders::getAccessUuid)
+                .orElseThrow(() -> new ResourceNotFoundException("Buyurtma topilmadi!"));
+    }
 }

@@ -3,6 +3,7 @@ package org.example.editors_uz.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.editors_uz.dto.ValidationResult;
+import org.example.editors_uz.entity.User;
 import org.example.editors_uz.util.PriceFormatter;
 import org.example.editors_uz.util.SendFile;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,13 +46,13 @@ public class PaymentService {
     private long maxFileSize;
 
 
-    public void sendFileToTelegram(MultipartFile file, String message) throws IOException {
+    public void sendFileToTelegram(MultipartFile file, String message, User user, BigDecimal ammont) throws IOException {
         String urlString = String.format(TELEGRAM_API_URL, botToken);
 
         IOException lastException = null;
         for (int attempt = 1; attempt <= MAX_RETRIES; attempt++) {
             try {
-                sendFileRequest.sendFileRequest(urlString, file, message);
+                sendFileRequest.sendFileRequest(urlString, file, message,user,ammont);
                 log.debug("File successfully sent to Telegram on attempt {}", attempt);
                 return;
             } catch (IOException e) {

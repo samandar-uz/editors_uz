@@ -9,7 +9,6 @@ import org.example.editors_uz.service.PaymentService;
 import org.example.editors_uz.util.BuildPaymentMessage;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,7 +41,7 @@ public class PaymentController {
 
             user = userRepository.findById(user.getId()).orElseThrow(() -> new RuntimeException("User topilmadi"));
             String message = buildPaymentMessage.buildPaymentMessage(amount, comment, user.getId());
-            paymentService.sendFileToTelegram(checkFile, message);
+            paymentService.sendFileToTelegram(checkFile, message,user,amount);
             log.info("Payment submitted successfully: user={}, amount={}", user.getUsername(), amount);
             redirectAttributes.addFlashAttribute("success", "✔️ To'lovingiz qabul qilindi! Tez orada tekshirib ko'ramiz.");
             return "redirect:/";
@@ -58,11 +57,4 @@ public class PaymentController {
         }
     }
 
-    @GetMapping("/balance/add")
-    public String addBalancePage(@AuthenticationPrincipal User user) {
-        if (user == null) {
-            return "redirect:/auth";
-        }
-        return "add-balance";
-    }
 }

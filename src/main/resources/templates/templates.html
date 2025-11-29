@@ -54,7 +54,6 @@
         }
 
 
-
         @media (max-width: 768px) {
         }
 
@@ -136,255 +135,231 @@
         }
     </style>
 
-    <script>tailwind.config = { theme: { extend: { colors: { primary: '#0008ff', secondary: '#6a3093' }, borderRadius: { 'none': '0px', 'sm': '4px', DEFAULT: '8px', 'md': '12px', 'lg': '16px', 'xl': '20px', '2xl': '24px', '2xl': '32px', 'full': '9999px', 'button': '8px' } } } }</script>
+    <script>tailwind.config = {theme: {extend: {colors: {primary: '#0008ff', secondary: '#6a3093'},
+                borderRadius: {
+                    'none': '0px',
+                    'sm': '4px',
+                    DEFAULT: '8px',
+                    'md': '12px',
+                    'lg': '16px',
+                    'xl': '20px',
+                    '2xl': '24px',
+                    '2xl': '32px',
+                    'full': '9999px',
+                    'button': '8px'
+                }
+            }
+        }
+    }</script>
 </head>
 
 <body class="min-h-screen container mx-auto" style="max-width: 1200px; margin: 0 auto;">
 
 
-
-
-
-
-
-<div th:if="${success}"
-     class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
-    <div class="flex items-center gap-2">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-        </svg>
-        <span th:text="${success}"></span>
-    </div>
-</div>
-
-<div th:if="${error}"
-     class="fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
-    <div class="flex items-center gap-2">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-        </svg>
-        <span th:text="${error}"></span>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class="cursor" id="cursor"></div>
+<div class="cursor" id="cursor"></div>
 
 <header class="container">
-        <div class="fixed top-0 left-0 w-full z-50 bg-white lg:block hidden slide-left">
-            <div class="flex items-center justify-between"
-                style="max-width: 1200px; margin: 10px auto 0;border-radius: 30px; height: 70px;">
-                <a href="/"><img src="img/logo.png" alt="" class="h-7"></a>
-                <div class="flex items-center">
-                    <ul class="flex"
-                        style="justify-content: space-evenly; width: 600px; list-style-type: none; font-size: 16px;">
-                        <a href="/" class="hover:text-[#ffA630]">
-                            <li>Bosh sahifa</li>
-                        </a>
-                        <a href="/courses" class="hover:text-[#ffA630]">
-                            <li>Kurslar</li>
-                        </a>
-                        <a href="/templates" class="text-[#ffA630]">
-                            <li class="text-center">Fayllar</li>
-                        </a>
-                        <a href="/" class="hover:text-[#ffA630]">
-                            <li>Biz haqimizda</li>
-                        </a>
-                        <a href="/" class="hover:text-[#ffA630]">
-                            <li>Aloqa</li>
-                        </a>
-                    </ul>
-                    <button class="relative inline-flex items-center justify-center p-2 bg-transparent border-0"
-                            aria-label="Savatcha">
-                        <a href="/basket" class="inline-flex items-center justify-center">
-                            <i class="bi bi-basket text-xl"></i>
-                        </a>
-                        <span
-                                class="hidden  top-3 right-1 translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-red-600 shadow-sm ring-2 ring-white"
-                                aria-hidden="true"></span>
-                    </button>
-
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <div class="lg:hidden fixed top-0 left-0 w-full z-50 bg-white">
-        <div class="flex items-center justify-between mt-4">
-            <a href="/"><img src="img/logo.png" alt="" class="h-7 ml-2"></a>
+    <div class="fixed top-0 left-0 w-full z-50 bg-white lg:block hidden slide-left">
+        <div class="flex items-center justify-between"
+             style="max-width: 1200px; margin: 10px auto 0;border-radius: 30px; height: 70px;">
+            <a href="/"><img src="img/logo.png" alt="" class="h-7"></a>
             <div class="flex items-center">
-                <button><a href="/basket"><i class="bi bi-basket text-[#000] text-2xl cursor-pointer mr-4"></i></a></button>
-                <button id="menu-btn"><i class="bi bi-list text-[#000] text-3xl cursor-pointer mr-4"></i></button>
-            </div>
+                <ul class="flex"
+                    style="justify-content: space-evenly; width: 600px; list-style-type: none; font-size: 16px;">
+                    <a href="/" class="hover:text-[#ffA630]">
+                        <li>Bosh sahifa</li>
+                    </a>
+                    <a href="/courses" class="hover:text-[#ffA630]">
+                        <li>Kurslar</li>
+                    </a>
+                    <a href="/templates" class="text-[#ffA630]">
+                        <li class="text-center">Fayllar</li>
+                    </a>
+                    <a href="/" class="hover:text-[#ffA630]">
+                        <li>Biz haqimizda</li>
+                    </a>
+                    <a href="/" class="hover:text-[#ffA630]">
+                        <li>Aloqa</li>
+                    </a>
+                </ul>
+                <button class="relative inline-flex items-center justify-center p-2 bg-transparent border-0"
+                        aria-label="Savatcha">
+                    <a href="/basket" class="inline-flex items-center justify-center">
+                        <i class="bi bi-basket text-xl"></i>
+                    </a>
+                    <span
+                            class="hidden  top-3 right-1 translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-red-600 shadow-sm ring-2 ring-white"
+                            aria-hidden="true"></span>
+                </button>
 
-        </div>
-        <div id="mobile-menu" class="hidden bg-white/95 backdrop-blur-sm container ">
-            <a href="/" class="hover:text-[#ffA630]">
-                <li class="pl-4 py-2 text-center">Bosh sahifa</li>
-            </a>
-            <a href="/courses" class="hover:text-[#ffA630]">
-                <li class="pl-4 py-2 text-center">Kurslar</li>
-            </a>
-            <a href="#maqsad" class="hover:text-[#ffA630]">
-                <li class="pl-4 py-2 text-center">Biz haqimizda</li>
-            </a>
-            <a href="/templates" class="hover:text-[#ffA630]">
-                <li class="pl-4 py-2 text-center">Fayllar</li>
-            </a>
-            <a href="#aloqa" class="hover:text-[#ffA630]">
-                <li class="pl-4 py-2 text-center">Aloqa</li>
-            </a>
+            </div>
         </div>
     </div>
+</header>
 
-    <div class="h-[60px] lg:h-[60px]"></div>
+<div class="lg:hidden fixed top-0 left-0 w-full z-50 bg-white">
+    <div class="flex items-center justify-between mt-4">
+        <a href="/"><img src="img/logo.png" alt="" class="h-7 ml-2"></a>
+        <div class="flex items-center">
+            <button><a href="/basket"><i class="bi bi-basket text-[#000] text-2xl cursor-pointer mr-4"></i></a></button>
+            <button id="menu-btn"><i class="bi bi-list text-[#000] text-3xl cursor-pointer mr-4"></i></button>
+        </div>
 
-    <main class="px-6 md:block">
-        <section class="px-10 mt-5 md:block lg:mt-10 swap-img fade-in">
-            <h1 class="bg-gradient-to-l from-stone-300/0 to-slate-300 rounded-2xl"
-                style="height: 5px; margin-top: 20px;"></h1>
-        </section>
+    </div>
+    <div id="mobile-menu" class="hidden bg-white/95 backdrop-blur-sm container ">
+        <a href="/" class="hover:text-[#ffA630]">
+            <li class="pl-4 py-2 text-center">Bosh sahifa</li>
+        </a>
+        <a href="/courses" class="hover:text-[#ffA630]">
+            <li class="pl-4 py-2 text-center">Kurslar</li>
+        </a>
+        <a href="#maqsad" class="hover:text-[#ffA630]">
+            <li class="pl-4 py-2 text-center">Biz haqimizda</li>
+        </a>
+        <a href="/templates" class="hover:text-[#ffA630]">
+            <li class="pl-4 py-2 text-center">Fayllar</li>
+        </a>
+        <a href="#aloqa" class="hover:text-[#ffA630]">
+            <li class="pl-4 py-2 text-center">Aloqa</li>
+        </a>
+    </div>
+</div>
 
-        <section>
-            <div>
-                <h2
+<div class="h-[60px] lg:h-[60px]"></div>
+
+<main class="px-6 md:block">
+    <section class="px-10 mt-5 md:block lg:mt-10 swap-img fade-in">
+        <h1 class="bg-gradient-to-l from-stone-300/0 to-slate-300 rounded-2xl"
+            style="height: 5px; margin-top: 20px;"></h1>
+    </section>
+
+    <section>
+        <div>
+            <h2
                     class="mt-5 swap-img slide-down text-xl md:text-2xl uppercase leading-snug font-bold text-black pb-4 sm:pb-5">
                 Faylar</h2>
-                <!-- filter -->
-                <div>
-                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg mr-2 mb-4">Photoshop</button>
-                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg mr-2 mb-4">After Effects</button>
-                </div>
-                <div class="text-center mt-5" th:if="${templates.size() == 0}">
-                    <p class="text-muted">No products found.</p>
-                </div>
-                <div class="swap-img slide-up">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="border border-gray-800 rounded-2xl overflow-hidden flex flex-col h-full" th:each="template : ${templates}">
-                            <img th:src="${template.getPhoto()}" alt="" class="w-full h-48 object-cover">
-                            <div class="p-4 flex flex-col gap-1 flex-1">
-                                <h3 class="font-bold text-lg" th:text="${template.getTitle()}"></h3>
-                                <p class="text-sm text-black-300" th:text="${template.getDescription()}"></p>
-                                <p class="text-[#ffA630] font-semibold"
-                                   th:text="${template.price == 0 ? 'Bepul' : (template.price + ' UZS')}"></p>
-                                <a th:if="${template.price > 0}"
-                                   th:href="@{/courses/free/{id}(id=${template.getId()})}"
-                                   class="mt-auto w-full py-2 rounded-lg text-white bg-green-600 text-center">
+            <!-- filter -->
+            <div>
+                <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg mr-2 mb-4">Photoshop</button>
+                <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg mr-2 mb-4">After Effects</button>
+            </div>
+            <div class="text-center mt-5" th:if="${products.size() == 0}">
+                <p class="text-muted">No products found.</p>
+            </div>
+            <div class="swap-img slide-up">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col h-full bg-white"
+                         th:each="product : ${products}">
+                        <div class="relative overflow-hidden">
+                            <img th:src="|file/${product.getPhoto().getId()}|"
+                                 alt="Product image"
+                                 class="w-full h-48 object-cover hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-5 flex flex-col gap-3 flex-1">
+                            <h3 class="font-bold text-xl text-gray-800 line-clamp-2"
+                                th:text="${product.getName()}"></h3>
+                            <p class="text-sm text-gray-600 line-clamp-3 flex-1"
+                               th:text="${product.getDescription()}"></p>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <p class="text-[#ffa630] font-bold text-xl"
+                                   th:text="${product.price == 0 ? 'Bepul' : (product.price + ' UZS')}"></p>
+                            </div>
+                            <div class="flex gap-3 mt-2">
+                                <a th:href="@{/course/buy/{id}(id=${product.getId()})}"
+                                   class="flex-1 py-2.5 rounded-lg text-white bg-green-600 hover:bg-green-700 transition-colors text-center font-medium">
                                     Sotib olish
                                 </a>
-
-
-                                <form th:if="${template.price == 0}"
-                                      th:action="@{/orders/create}"
-                                      method="post">
-                                    <input type="hidden" name="templateId" th:value="${template.getId()}">
-                                    <button type="submit"
-                                            class="mt-auto w-full py-2 rounded-lg text-white bg-[#ffA630]">
-                                        Sotib olish
-                                    </button>
-                                </form>
-
+                                <a th:href="@{/course/details/{id}(id=${product.getId()})}"
+                                   class="px-4 py-2.5 rounded-lg text-green-600 border border-green-600 hover:bg-green-50 transition-colors text-center font-medium">
+                                    Batafsil
+                                </a>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+</main>
 
-    <script>
-        const cursor = document.getElementById('cursor');
+<script>
+    const cursor = document.getElementById('cursor');
 
-        document.addEventListener('mousemove', e => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const counters = document.querySelectorAll(".counter");
+    document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const counters = document.querySelectorAll(".counter");
 
-            const startCounter = (counter) => {
-                const target = +counter.getAttribute("data-target");
-                let count = 0;
-                const speed = target / 50;
+        const startCounter = (counter) => {
+            const target = +counter.getAttribute("data-target");
+            let count = 0;
+            const speed = target / 50;
 
-                const update = () => {
-                    count += speed;
-                    if (count < target) {
-                        counter.innerText = Math.floor(count);
-                        requestAnimationFrame(update);
-                    } else {
-                        counter.innerText = target;
-                    }
-                };
-
-                update();
+            const update = () => {
+                count += speed;
+                if (count < target) {
+                    counter.innerText = Math.floor(count);
+                    requestAnimationFrame(update);
+                } else {
+                    counter.innerText = target;
+                }
             };
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        startCounter(entry.target);
-                        observer.unobserve(entry.target); // 1 marta ishlaydi
-                    }
-                });
-            }, { threshold: 0.5 });
 
-            counters.forEach(counter => observer.observe(counter));
-        });
-    </script>
-    <script>
-        const menuBtn = document.getElementById('menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
-
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            if (mobileMenu.classList.contains('hidden')) {
-                menuIcon.classList.remove('ri-close-line');
-                menuIcon.classList.add('ri-menu-line');
-            } else {
-                menuIcon.classList.remove('ri-menu-line');
-                menuIcon.classList.add('ri-close-line');
-            }
-        });
-
-        const navLinks = document.querySelectorAll('#mobile-menu a');
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                menuIcon.classList.remove('ri-close-line');
-                menuIcon.classList.add('ri-menu-line');
+            update();
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
             });
-        });
+        }, {threshold: 0.5});
 
-        document.addEventListener('click', (event) => {
-            const isClickInsideMenu = mobileMenu.contains(event.target);
-            const isClickOnMenuButton = menuBtn.contains(event.target);
+        counters.forEach(counter => observer.observe(counter));
+    });
+</script>
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
 
-            if (!mobileMenu.classList.contains('hidden') && !isClickInsideMenu && !isClickOnMenuButton) {
-                mobileMenu.classList.add('hidden');
-                menuIcon.classList.remove('ri-close-line');
-                menuIcon.classList.add('ri-menu-line');
-            }
+    menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        if (mobileMenu.classList.contains('hidden')) {
+            menuIcon.classList.remove('ri-close-line');
+            menuIcon.classList.add('ri-menu-line');
+        } else {
+            menuIcon.classList.remove('ri-menu-line');
+            menuIcon.classList.add('ri-close-line');
+        }
+    });
+
+    const navLinks = document.querySelectorAll('#mobile-menu a');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            menuIcon.classList.remove('ri-close-line');
+            menuIcon.classList.add('ri-menu-line');
         });
-    </script>
+    });
+
+    document.addEventListener('click', (event) => {
+        const isClickInsideMenu = mobileMenu.contains(event.target);
+        const isClickOnMenuButton = menuBtn.contains(event.target);
+
+        if (!mobileMenu.classList.contains('hidden') && !isClickInsideMenu && !isClickOnMenuButton) {
+            mobileMenu.classList.add('hidden');
+            menuIcon.classList.remove('ri-close-line');
+            menuIcon.classList.add('ri-menu-line');
+        }
+    });
+</script>
 
 
 </body>

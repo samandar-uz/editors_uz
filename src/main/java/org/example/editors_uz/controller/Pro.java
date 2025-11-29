@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.editors_uz.entity.Attachment;
+import org.example.editors_uz.entity.OrderType;
 import org.example.editors_uz.entity.Product;
 import org.example.editors_uz.repository.ProductRepository;
 import org.example.editors_uz.service.FileService;
@@ -49,6 +50,7 @@ public class Pro {
             // Product yaratish
             Product product = new Product();
             product.setPhoto(attachment);
+            product.setOrderType(OrderType.TEMPLATE);
             product.setName(name.trim());
             product.setDescription(description != null ? description.trim() : "");
             product.setPrice(Integer.valueOf(price != null ? price.trim() : "0"));

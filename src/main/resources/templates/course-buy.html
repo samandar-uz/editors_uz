@@ -5,62 +5,151 @@
     <meta charset="UTF-8">
     <title>Kurs Sotib Olish</title>
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 
-<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-400 to-purple-500 p-4">
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
 
-<!-- Success -->
-<div th:if="${success}" class="fixed inset-0 flex items-center justify-center bg-black/50">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md text-center">
-        <i class="bi bi-check-circle-fill text-green-500 text-5xl mb-3"></i>
-        <h2 class="text-2xl font-bold">Tabriklaymiz! 🎉</h2>
-        <p>Kurs muvaffaqiyatli sotib olindi</p>
+<!-- === 1. Muvaffaqiyatli sotib olindi === -->
+<div th:if="${type == 'COURSE_PURCHASE_SUCCESS'}"
+     class="bg-white rounded-3xl shadow-xl p-8 w-full max-w-md text-center animate-fade-in">
 
-        <div class="border rounded-xl p-4 mt-4">
-            <p><b th:text="${courseName}">Kurs nomi</b></p>
-            <p class="text-green-600 text-xl font-bold" th:text="${coursePrice} + ' UZS'">0 UZS</p>
+    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <i class="bi bi-check-circle-fill text-green-600 text-4xl"></i>
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Tabriklaymiz!</h2>
+    <p class="text-gray-600 mb-6">Kurs muvaffaqiyatli sotib olindi</p>
+
+    <div class="bg-gray-50 rounded-2xl p-5 mb-6">
+        <p class="text-lg font-semibold text-gray-800 mb-2" th:text="${courseName}">Kurs nomi</p>
+        <p class="text-green-600 text-2xl font-bold mb-3" th:text="${coursePrice} + ' UZS'">0 UZS</p>
+        <div class="text-sm text-gray-500">
+            Balans: <span th:text="${oldBalance}"></span> → <span class="font-semibold text-gray-700" th:text="${newBalance}"></span>
         </div>
+    </div>
 
-        <div class="mt-4 flex gap-2">
-            <a href="/basket" class="flex-1 bg-green-500 text-white py-2 rounded-lg">Savat</a>
-            <a href="/courses" class="flex-1 bg-gray-200 py-2 rounded-lg">Kurslar</a>
-        </div>
+    <div class="flex gap-3">
+        <a th:href="@{'/course/access/' + ${access}}"
+           class="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-3 rounded-xl transition-colors">
+            Kursni ochish
+        </a>
+        <a href="/courses"
+           class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 rounded-xl transition-colors">
+            Boshqa kurslar
+        </a>
     </div>
 </div>
 
-<!-- Error -->
-<div th:if="${error}" class="fixed inset-0 flex items-center justify-center bg-black/50">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md text-center">
-        <i class="bi bi-x-circle-fill text-red-500 text-5xl mb-3"></i>
-        <h2 class="text-2xl font-bold">Xatolik! 😔</h2>
-        <p class="text-red-600 font-semibold" th:text="${error}">Balans yetarli emas</p>
+<!-- === 2. Avval sotib olingan === -->
+<div th:if="${type == 'ALREADY_PURCHASED'}"
+     class="bg-white rounded-3xl shadow-xl p-8 w-full max-w-md text-center animate-fade-in">
 
-        <div class="border rounded-xl p-4 mt-4">
-            <p><b th:text="${courseName}">Kurs nomi</b></p>
-            <p>Kurs narxi: <b th:text="${coursePrice} + ' UZS'">0 UZS</b></p>
-            <p>Sizning balansingiz: <b th:text="${userBalance} + ' UZS'">0 UZS</b></p>
-        </div>
+    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <i class="bi bi-info-circle-fill text-blue-600 text-4xl"></i>
+    </div>
 
-        <div class="mt-4 flex gap-2">
-            <a href="/balance/add" class="flex-1 bg-blue-500 text-white py-2 rounded-lg">Balans to'ldirish</a>
-            <a href="/courses" class="flex-1 bg-gray-200 py-2 rounded-lg">Ortga</a>
-        </div>
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Diqqat!</h2>
+    <p class="text-gray-600 mb-6">Siz bu kursni avval sotib olgansiz</p>
+
+    <div class="bg-gray-50 rounded-2xl p-5 mb-6">
+        <p class="text-lg font-semibold text-gray-800 mb-2" th:text="${courseName}">Kurs nomi</p>
+        <p class="text-blue-600 text-xl font-bold" th:text="${coursePrice} + ' UZS'">0 UZS</p>
+    </div>
+
+    <div class="flex gap-3">
+        <a th:href="@{'/course/access/' + ${access}}"
+           class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl transition-colors">
+            Kursni ochish
+        </a>
+        <a href="/courses"
+           class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 rounded-xl transition-colors">
+            Ortga
+        </a>
     </div>
 </div>
 
-<!-- Loading -->
-<div th:unless="${success} or ${error}" class="text-center bg-white p-6 rounded-2xl shadow-md">
-    <div class="animate-spin h-10 w-10 border-4 border-b-transparent border-purple-600 rounded-full mx-auto"></div>
-    <p class="text-gray-600 mt-3">Iltimos kuting...</p>
+<!-- === 3. Balans yetarli emas === -->
+<div th:if="${type == 'BALANCE_INSUFFICIENT'}"
+     class="bg-white rounded-3xl shadow-xl p-8 w-full max-w-md text-center animate-fade-in">
+
+    <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <i class="bi bi-wallet2 text-red-600 text-4xl"></i>
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Balans yetarli emas</h2>
+    <p class="text-gray-600 mb-6">Kursni sotib olish uchun hisobni to'ldiring</p>
+
+    <div class="bg-gray-50 rounded-2xl p-5 mb-6 text-left">
+        <p class="font-semibold text-gray-800 mb-3" th:text="${courseName}">Kurs nomi</p>
+
+        <div class="space-y-2 text-sm">
+            <div class="flex justify-between">
+                <span class="text-gray-600">Kurs narxi:</span>
+                <span class="font-semibold" th:text="${coursePrice} + ' UZS'"></span>
+            </div>
+            <div class="flex justify-between">
+                <span class="text-gray-600">Sizning balansingiz:</span>
+                <span class="font-semibold" th:text="${userBalance} + ' UZS'"></span>
+            </div>
+            <div class="border-t pt-2 flex justify-between">
+                <span class="text-gray-600">Yana kerak:</span>
+                <span class="font-bold text-red-600" th:text="${needed} + ' UZS'"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex gap-3">
+        <a href="/balance/add"
+           class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl transition-colors">
+            Balans to'ldirish
+        </a>
+        <a href="/courses"
+           class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 rounded-xl transition-colors">
+            Ortga
+        </a>
+    </div>
 </div>
 
-<script>
-    // Avtomatik qayta yo‘naltirish
-    setTimeout(() => {
-        if (document.querySelector('[th\\:if="${success}"]')) location.href = '/basket';
-        if (document.querySelector('[th\\:if="${error}"]')) location.href = '/courses';
-    }, 5000);
-</script>
+<!-- === 4. Xatolik === -->
+<div th:if="${type == 'PURCHASE_ERROR'}"
+     class="bg-white rounded-3xl shadow-xl p-8 w-full max-w-md text-center animate-fade-in">
+
+    <div class="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <i class="bi bi-exclamation-triangle-fill text-yellow-600 text-4xl"></i>
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Xatolik yuz berdi</h2>
+    <p class="text-gray-600 mb-6" th:text="${error}">Noma'lum xatolik</p>
+
+    <a href="/courses"
+       class="block w-full bg-gray-800 hover:bg-gray-900 text-white font-medium py-3 rounded-xl transition-colors">
+        Ortga qaytish
+    </a>
+</div>
+
+<!-- === 5. Yuklanmoqda === -->
+<div th:unless="${type}"
+     class="bg-white rounded-3xl shadow-xl p-8 w-full max-w-md text-center">
+    <div class="w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
+    <p class="text-gray-600 font-medium">Iltimos kuting...</p>
+</div>
+
+<style>
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .animate-fade-in {
+        animation: fade-in 0.3s ease-out;
+    }
+</style>
 
 </body>
 </html>
